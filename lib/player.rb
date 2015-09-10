@@ -12,31 +12,19 @@ class Player
   end
 
   def place(ship)
-    fail "Wrong coordinates" if wrong_coordinates?(ship)
+    fail "Wrong coordinates" if wrong_coordinates?(ship.coordinates)
     board << ship
   end
 
-  # def fire(coordinates)
-  #   fail "You shot outside the range" if !COORDINATES.include?(coordinates)
-  #   return "You've hit a ship!. Game over" if last_ship
-  #   return "You've hit a ship!" if struck(coordinates)
-  #   return "You've missed a ship!" if missed(coordinates)
-  # end
-
   def fire(coordinates)
-    if !COORDINATES.include?(coordinates)
-      fail "You shot outside the range"
-    elsif last_ship?(coordinates)
-      return "You've hit a ship!. Game over"
-    elsif struck(coordinates)
-      return "You've hit a ship!"
-    else missed(coordinates)
-      return "You've missed a ship!"
-    end
+    fail "You shot outside the range" if wrong_coordinates?(coordinates)
+    return "You've hit a ship! Game over" if last_ship?(coordinates)
+    return "You've hit a ship!" if struck(coordinates)
+    return "You've missed a ship!" if missed(coordinates)
   end
 
 
-private
+  private
 
   def last_ship?(coordinates)
     hits << coordinates if got_hit?(coordinates) && board.length - hits.length == 1
@@ -54,8 +42,8 @@ private
     misses << coordinates if !got_hit?(coordinates)
   end
 
-  def wrong_coordinates?(ship)
-    !COORDINATES.include?(ship.coordinates)
+  def wrong_coordinates?(coordinates)
+    !COORDINATES.include?(coordinates)
   end
 
 end

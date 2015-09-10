@@ -45,7 +45,7 @@ describe Player do
     subject.place(ship)
     subject.place(ship3)
     subject.fire(:A1)
-    expect(subject.fire(:B2)).to eq "You've hit a ship!. Game over"
+    expect(subject.fire(:B2)).to eq "You've hit a ship! Game over"
   end
 
 end

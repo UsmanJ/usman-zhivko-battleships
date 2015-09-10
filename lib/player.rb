@@ -12,9 +12,11 @@ class Player
   end
 
   def place(ship)
+    fail "Ship already in this location!" if ship_already_in_location?(ship.coordinates)
     fail "Wrong coordinates" if wrong_coordinates?(ship.coordinates)
-    board << ship
+    board << ship.coordinates
   end
+
 
   def fire(coordinates)
     fail "You shot outside the range" if wrong_coordinates?(coordinates)
@@ -26,12 +28,16 @@ class Player
 
   private
 
+  def ship_already_in_location?(coordinates)
+    board.include?(coordinates)
+  end
+
   def last_ship?(coordinates)
     hits << coordinates if got_hit?(coordinates) && board.length - hits.length == 1
   end
 
   def got_hit?(coordinates)
-    board.find {|ship| ship.coordinates == coordinates}
+    board.find {|position| position == coordinates}
   end
 
   def struck(coordinates)

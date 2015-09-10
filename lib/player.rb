@@ -1,7 +1,7 @@
 require_relative 'ship'
 
 class Player
-  COORDINATES = [:A1, :B1, :A2, :B2]
+  COORDINATES = [:A1, :B1, :A2, :B2, :A3]
 
   attr_reader :board, :hits, :misses
 
@@ -14,7 +14,7 @@ class Player
   def place(ship)
     fail "Ship already in this location!" if ship_already_in_location?(ship.coordinates)
     fail "Wrong coordinates" if wrong_coordinates?(ship.coordinates)
-    board << ship.coordinates
+    placing_ship(ship)
   end
 
 
@@ -25,6 +25,12 @@ class Player
     return "You've missed a ship!" if missed(coordinates)
   end
 
+  def placing_ship(ship)
+    board << ship.coordinates
+    (ship.size - 1).times do
+      board << ship.coordinates.next
+    end
+  end
 
   private
 

@@ -2,14 +2,15 @@ require 'player'
 
 describe Player do
 
-  let(:ship) {double :ship, coordinates: :A1}
+  let(:ship) {double :ship, coordinates: :A1, size: 1}
   let(:ship2) {double :ship2, coordinates: :C2}
-  let(:ship3) {double :ship3, coordinates: :B2}
-  let(:ship4) {double :ship4, coordinates: :A1}
+  let(:ship3) {double :ship3, coordinates: :B2, size: 1}
+  let(:ship4) {double :ship4, coordinates: :A1, size: 2}
 
 
   it "can place on board" do
-    expect(subject.place ship).to eq(subject.board)
+    subject.place(ship)
+    expect(subject.board).to eq ([:A1])
   end
 
   it "can fire at the right coordinates" do
@@ -53,6 +54,11 @@ describe Player do
   it 'cannot place a ship ontop of another ship' do
     subject.place(ship)
     expect { subject.place(ship4) }.to raise_error 'Ship already in this location!'
+  end
+
+  it 'puts ship location next to each other' do
+    subject.place(ship4)
+    expect(subject.board).to eq([:A1, :A2])
   end
 
 end

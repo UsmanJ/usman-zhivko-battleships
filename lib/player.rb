@@ -17,6 +17,7 @@ class Player
   end
 
   def fire(coordinates)
+    fail "You shot outside the range" if !COORDINATES.include?(coordinates)
     return "You've hit a ship!" if struck(coordinates)
     return "You've missed a ship!" if missed(coordinates)
   end

@@ -3,7 +3,7 @@ require 'player'
 describe Player do
 
   let(:ship) {double :ship, coordinates: :A1}
-  let(:ship2) {double :ship2, coordinates: :C4}
+  let(:ship2) {double :ship2, coordinates: :C2}
 
   it "we can place on board" do
     expect(subject.place ship).to eq(subject.board)
@@ -16,7 +16,7 @@ describe Player do
 
   it "we missed a ship when we fire" do
     subject.place(ship)
-    expect(subject.fire :C1).to eq "You've missed a ship!"
+    expect(subject.fire :B2).to eq "You've missed a ship!"
   end
 
   it 'the game can end' do
@@ -47,5 +47,8 @@ describe Player do
     expect{subject.place(ship2)}.to raise_error "Wrong coordinates"
   end
 
+  it 'shot outside of range' do
+    expect { subject.fire(:B9) }.to raise_error 'You shot outside the range'
+  end
 
 end
